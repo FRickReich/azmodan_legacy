@@ -1,0 +1,13 @@
+{
+    "name": "azmodan",
+    "version": "0.1.0",
+    "description": "An end-to-end testing framework driven by puppeteer and the magic of yaml.",
+    "main": "index.js",
+    "scripts":
+    {
+        "start": "node app.js"
+    },
+    "keywords": [],
+    "author": "F. Rick Reich <frickreich@gmail.com>",
+    "license": "MIT"
+}
