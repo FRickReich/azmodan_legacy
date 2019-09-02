@@ -76,7 +76,7 @@ class EmailOutput
             {
                 if (err) throw err;
 
-                for (const file of files) 
+                for (const file of files)
                 {
                     fs.unlink(path.join('./screenshots', file), err => 
                     {

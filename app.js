@@ -31,7 +31,7 @@ const populateCases = () =>
     return temp;
 }
 
-const runTest = () =>
+const runTest = async () =>
 {
     const runningCase = cases[currentCase];
     const test = new Test(runningCase);

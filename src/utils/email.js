@@ -201,6 +201,16 @@ const generateHtmlOutput = (results) =>
                         margin: 0;
                         padding: 0;
                     }
+                    body
+                    {
+                        background-color: #67707C;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    center
+                    {
+                        background-color: #E1E1E1;
+                    }
                     body,
                     #bodyTable,
                     #bodyCell,
@@ -290,9 +300,7 @@ const generateHtmlOutput = (results) =>
                 </style>
             </head>
             <body>
-                <center
-                    style="background-color: #E1E1E1;"
-                >
+                <center>
                     <table
                         border="0"
                         cellpadding="0"
