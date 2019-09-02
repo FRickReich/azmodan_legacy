@@ -49,6 +49,7 @@ type ```npm start``` after you have defined one or more cases.
 Visits a URL, this is needed for any other steps to follow.
 
 **Options**
+
 | Title       | Type   | required | Description                                     | Example                           |
 | ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
 | url         | string | true     | The target URL.                                 | https://www.google.com/           |
@@ -59,6 +60,7 @@ Visits a URL, this is needed for any other steps to follow.
 Fills in an input field.
 
 **Options**
+
 | Title       | Type   | required | Description                                     | Example                           |
 | ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
 | target      | string | true     | The target dom-element.                         | input[name=q]                     |
@@ -66,12 +68,11 @@ Fills in an input field.
 | description | string | true     | A short description of the action.              | type "Hello world" into searchbar |
 | delay       | number | string   | Delay in milliseconds before action is invoked. | 5000                              |
 
-**Options**
-
 #### ``click``
 Clicks on a specified dom-element.
 
 **Options**
+
 | Title       | Type   | required | Description                                     | Example                           |
 | ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
 | target      | string | true     | The target dom-element.                         | #login                            |
@@ -82,6 +83,7 @@ Clicks on a specified dom-element.
 Presses a key.
 
 **Options**
+
 | Title       | Type   | required | Description                                     | Example                           |
 | ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
 | key         | string | true     | The target dom-element.                         | Enter                             |
