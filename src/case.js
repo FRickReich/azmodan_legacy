@@ -28,7 +28,7 @@ class Case
     /* ================== GETTERS ================== */
     /**
      * Gets the title of the current case.
-     * @function getTitle
+     * @method getTitle
      * @returns { string }
      */
     getTitle()
@@ -39,6 +39,7 @@ class Case
     /* ================== SETTERS ================== */
     /** 
      * Sets the title of the current case.
+     * @method setTitle
      * @param { string } input
      */
     setTitle(input)
@@ -48,6 +49,7 @@ class Case
 
     /**
      * Populates the cases queue with all actions from the list.
+     * @method setQueue
      * @param { array } actions
      */
     setQueue(actions)

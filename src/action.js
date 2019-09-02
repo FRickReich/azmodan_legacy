@@ -17,7 +17,7 @@ class Action
     /* ================== GETTERS ================== */
     /**
      * Gets the state of the current action.
-     * @function getState
+     * @method getState
      * @returns { boolean }
      */
     getState()
@@ -27,7 +27,7 @@ class Action
 
     /**
      * Gets the specified piece of data from the data object.
-     * @function getData
+     * @method getData
      * @param { string } key 
      * @returns { object }
      */
@@ -38,7 +38,7 @@ class Action
 
     /**
      * Gets the title of the current action.
-     * @function getTitle
+     * @method getTitle
      * @returns { string }
      */
     getTitle()
@@ -49,7 +49,7 @@ class Action
     /* ================== SETTERS ================== */
     /**
      * Sets state of the current action.
-     * @function setState
+     * @method setState
      * @param { object } state 
      */
     setState(state)
@@ -59,7 +59,7 @@ class Action
 
     /**
      * Adds a specified piece of data to the data object.
-     * @function setData
+     * @method setData
      * @param { string } key 
      * @param { string } input 
      */

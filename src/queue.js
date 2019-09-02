@@ -17,7 +17,7 @@ class Queue
     /* ================== GETTERS ================== */
     /**
      * Gets the next item and removes it from the queue.
-     * @function getNextItem
+     * @method getNextItem
      * @returns { object }
      */
     getNextItem()
@@ -32,7 +32,7 @@ class Queue
 
     /**
      * Gets the current size of the queue.
-     * @function getSize
+     * @method getSize
      * @returns { number }
      */
     getSize()
@@ -43,7 +43,7 @@ class Queue
 /* ================== SETTERS ================== */
     /**
      * Add an item (action) to the queue.
-     * @function setNewAction
+     * @method setNewAction
      * @param { object } data
      * @returns { object }
      */

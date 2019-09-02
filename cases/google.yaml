@@ -5,7 +5,7 @@ actions:
     title: 'open google.com'
 
   - type: 'fill'
-    target: 'input[name=q]'
+    target: 'input[dname=q]'
     content: 'Hello world'
     title: 'type "Hello world" into searchbar'
     delay: 5000

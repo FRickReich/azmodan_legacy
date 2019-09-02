@@ -1,7 +1,7 @@
 'use strict';
 
 const puppeteer = require('puppeteer');
-
+const { TerminalOutput } = require('./terminalOutput');
 const { handleTimeDifference } = require('./utils');
 
 class Test
@@ -19,13 +19,15 @@ class Test
         this.endTime;
         this.state = false;
         this.actions = [];
-        this.failureMessage = "abcdefg";
+        this.passedActions = 0;
+        this.failedActions = 0;
+        this.failureMessage = '';
     }
 
     /* ================== GETTERS ================== */
     /**
      * Gets the timestamp of the current tests initiation.
-     * @function getStartTime
+     * @method getStartTime
      * @returns { number }
      */
     getStartTime()
@@ -35,7 +37,7 @@ class Test
 
     /**
      * Gets the timestamp of when the current test-case finished.
-     * @function getEndTime
+     * @method getEndTime
      * @returns { number }
      */
     getEndTime()
@@ -45,7 +47,7 @@ class Test
 
     /**
      * Gets the final state of the current test-case.
-     * @function getState
+     * @method getState
      * @returns { boolean }
      */
     getState()
@@ -55,7 +57,7 @@ class Test
 
     /**
      * Gets a list of all actions that are part of the current test-case.
-     * @function getActions
+     * @method getActions
      * @returns { object }
      */
     getActions()
@@ -65,7 +67,7 @@ class Test
 
     /**
      * ON FAILED: Gets the failure message of the current test-case.
-     * @function getFailureMessage
+     * @method getFailureMessage
      * @returns { string }
      */
     getFailureMessage()
@@ -73,10 +75,20 @@ class Test
         return this.failureMessage;
     }
 
+    getPassedActionsAmount()
+    {
+        return this.passedActions;    
+    }
+
+    getFailedActionsAmount()
+    {
+        return this.failedActions;
+    }
+
     /* ================== SETTERS ================== */
     /**
      * Sets the final state of the current test-case.
-     * @function setState
+     * @method setState
      * @param { bool } state 
      */
     setState(state)
@@ -86,7 +98,7 @@ class Test
 
     /**
      * Sets the actions taken in the current test-case.
-     * @function setActions
+     * @method setActions
      * @param { number } timestamp
      * @param { string } description
      * @param { bool } state
@@ -104,7 +116,7 @@ class Test
 
     /**
      * ON FAILED: Sets the current test-cases failure message.
-     * @function setFailureMessage
+     * @method setFailureMessage
      * @param { string } message
      */
     setFailureMessage(message)
@@ -114,17 +126,39 @@ class Test
 
     /* ================= FUNCTIONS ================= */
     /**
+     * Increments the amount of passed actions.
+     * @method incrementPassedActionAmount
+     */
+    incrementPassedActionAmount()
+    {
+        this.passedActions++;
+    }
+    /**
+     * Increments the amount of failed actions.
+     * @method incrementFailedActionAmount
+     */
+    incrementFailedActionAmount()
+    {
+        this.failedActions++;
+    }
+
+    /**
      * Calculates the timestamp of the test-cases initialization.
-     * @function calculateStartTime
+     * @method calculateStartTime
      */
     calculateStartTime()
     {
         this.startTime = new Date().getTime();
     }
 
+    calculateRunningTime()
+    {
+        return handleTimeDifference(this.startTime, this.actions[this.actions.length - 1].timestamp);
+    }
+
     /**
      * Calculates the timestamp of when the current test-case finished.
-     * @function calculateEndTime
+     * @method calculateEndTime
      */
     calculateEndTime()
     {
@@ -133,14 +167,19 @@ class Test
 
     /**
      * Starts the current test-case.
-     * @function startTest
+     * @method startTest
      * @param { function } callback 
      */
     startTest(callback)
     {
+        const caseTitle = this.case.getTitle();
+
         this.calculateStartTime();
 
-        console.log(this.case.title);
+        const terminal = new TerminalOutput();
+        terminal.setTitle(caseTitle);
+        terminal.createTable();
+        terminal.showTable();
 
         puppeteer.launch({
             args: [
@@ -171,6 +210,8 @@ class Test
                         }).catch((e) =>
                         {
                             currentAction.setState(false);
+
+                            this.setFailureMessage(e);
                         });
                         break;
                     case 'fill':
@@ -180,6 +221,8 @@ class Test
                         }).catch((e) =>
                         {
                             currentAction.setState(false);
+
+                            this.setFailureMessage(e);
                         });
                         break;
                     case 'click':
@@ -189,6 +232,8 @@ class Test
                         }).catch((e) =>
                         {
                             currentAction.setState(false);
+
+                            this.setFailureMessage(e);
                         });
                         break;
                     case 'press':
@@ -198,6 +243,8 @@ class Test
                         }).catch((e) =>
                         {
                             currentAction.setState(false);
+
+                            this.setFailureMessage(e);
                         });
                         break;
                     case 'console':
@@ -208,26 +255,31 @@ class Test
 
                 this.setActions(new Date().getTime(), currentAction.getTitle(), currentAction.getState());
 
-                console.log("- " + currentAction.getTitle());
+                terminal.createRow(new Date().getTime(), currentAction.getTitle(), currentAction.getState());
 
                 if (currentAction.getState() === false)
                 {
+                    this.incrementFailedActionAmount();
+
                     for (let idx = 0; idx <= this.case.queue.getSize(); idx++)
-                    {
+                    {       
                         const currentAction = this.case.queue.getNextItem();
+
+                        this.incrementFailedActionAmount();
 
                         this.setActions(new Date().getTime(), currentAction.getTitle(), false);
 
-                        console.log("-------- " + currentAction.getTitle());
+                        terminal.createRow("", currentAction.getTitle(), false);
                     }
 
                     await page.waitFor(1000);
-                    await page.screenshot({ path: `screenshots/screenshot_${ this.case.getTitle() }_${ index }_${ new Date().getTime() }.png`, fullPage: true });
+                    await page.screenshot({ path: `screenshots/screenshot_${ caseTitle }_${ index }_${ new Date().getTime() }.png`, fullPage: true });
 
                     break;
                 }
                 else
                 {
+                    this.incrementPassedActionAmount();
                     this.setState(true);
                 }
             }
@@ -236,12 +288,21 @@ class Test
             {
                 this.calculateEndTime();
 
+                terminal.createFooter(this.getFailedActionsAmount(), this.calculateRunningTime());
+
                 callback({
-                    startTime: this.getStartTime(),
-                    endTime: this.getEndTime(),
-                    runningTime: handleTimeDifference(this.startTime, this.actions[this.actions.length - 1].timestamp),
+                    caseTitle: this.case.getTitle(),
+                    time: {
+                        start: this.getStartTime(),
+                        end: this.getEndTime(),
+                        running: this.calculateRunningTime(),
+                    },
                     state: this.getState(),
                     actions: this.getActions(),
+                    amount: {
+                        passed: this.getPassedActionsAmount(),
+                        failed: this.getFailedActionsAmount()
+                    },
                     failureMessage: this.getFailureMessage()
                 });
             });
