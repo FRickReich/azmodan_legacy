@@ -1,0 +1,15 @@
+title: 'google search'
+actions:
+  - type: 'visit'
+    url: 'https://www.google.com/'
+    title: 'open google.com'
+
+  - type: 'fill'
+    target: 'input[name=q]'
+    content: 'Hello world'
+    title: 'type "Hello world" into searchbar'
+    delay: 5000
+    
+  - type: 'press'
+    key: 'Enter'
+    title: 'press enter'
