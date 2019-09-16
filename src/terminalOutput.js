@@ -74,6 +74,10 @@ class TerminalOutput
         return this.counter;
     }
 
+    /**
+     * Gets the current cases breakpoint on failed.
+     * @method getBreakpoint
+     */
     getBreakpoint()
     {
         return this.breakpoint;
@@ -90,6 +94,10 @@ class TerminalOutput
         this.title = title;
     }
 
+    /**
+     * Sets the current row line to the breakpoint on fail.
+     * @method setBreakpoint
+     */
     setBreakpoint()
     {
         this.breakpoint = this.counter;
