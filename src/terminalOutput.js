@@ -77,6 +77,7 @@ class TerminalOutput
     /**
      * Gets the current cases breakpoint on failed.
      * @method getBreakpoint
+     * @returns { number }
      */
     getBreakpoint()
     {
@@ -86,8 +87,7 @@ class TerminalOutput
     /**
      * Sets the title for the table header.
      * @method setTitle
-     * @param { string } title
-     * @returns { string }
+     * @param { string } titlex
      */
     setTitle(title)
     {
