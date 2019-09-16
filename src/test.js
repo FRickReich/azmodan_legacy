@@ -1,12 +1,14 @@
 'use strict';
 
 const puppeteer = require('puppeteer');
+
 const { TerminalOutput } = require('./terminalOutput');
-const { handleTimeDifference } = require('./utils');
+const {
+    handleTimeDifference
+} = require('./utils');
 
 class Test
 {
-    /* ================ CONSTRUCTOR ================ */
     /**
      * @constructor
      * @param { object } data
@@ -24,7 +26,6 @@ class Test
         this.failureMessage = '';
     }
 
-    /* ================== GETTERS ================== */
     /**
      * Gets the timestamp of the current tests initiation.
      * @method getStartTime
@@ -75,17 +76,26 @@ class Test
         return this.failureMessage;
     }
 
+    /**
+     * Gets the amount of passed actions.
+     * @method getPassedActionsAmount
+     * @returns { number }
+     */
     getPassedActionsAmount()
     {
         return this.passedActions;    
     }
 
+    /**
+     * Gets the amount of failed actions.
+     * @method getFailedActionsAmount
+     * @returns { number }
+     */
     getFailedActionsAmount()
     {
         return this.failedActions;
     }
 
-    /* ================== SETTERS ================== */
     /**
      * Sets the final state of the current test-case.
      * @method setState
@@ -124,7 +134,6 @@ class Test
         this.failureMessage = message;
     }
 
-    /* ================= FUNCTIONS ================= */
     /**
      * Increments the amount of passed actions.
      * @method incrementPassedActionAmount
@@ -151,6 +160,11 @@ class Test
         this.startTime = new Date().getTime();
     }
 
+    /**
+     * Calculates the time the test case took from start to finish.
+     * @method calculateRunningTime
+     * @returns { number }
+     */
     calculateRunningTime()
     {
         return handleTimeDifference(this.startTime, this.actions[this.actions.length - 1].timestamp);

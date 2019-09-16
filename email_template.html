@@ -7,89 +7,59 @@
 		<meta name="format-detection" content="telephone=no" /> <!-- disable auto telephone linking in iOS -->
 		<title>Testresults</title>
         <style type="text/css">
-			html { 
-                background-color:#D3DADE;
-                margin:0;
-                padding:0;
-            }
-			body, 
-            #bodyTable, 
-            #bodyCell, 
-            #bodyCell{
-                height:100% !important;
-                margin:0;
-                padding:0;
-                width:100% !important;
-                font-family:Helvetica, Arial, "Lucida Grande", sans-serif;
-            }
-			table{
-                border-collapse:collapse;
-                }
-			table[id=bodyTable]{width:100%!important;margin:auto;max-width:700px!important;color:#7A7A7A;font-weight:normal;}
-			img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
-			a {text-decoration:none !important;border-bottom: 1px solid;}
-			h1, h2, h3, h4, h5, h6{color:#5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
-			body, #bodyTable{background-color:#D3DADE;}
-            table.tableComponent
-            {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            table.tableComponent th
-            {
-                height: 30px;
-                text-align: center;
-                vertical-align: center;
-                background-color: #555;
-                color: white;
-            }
-            table.tableComponent td
-            {
-                padding: 5px;
-            }
-            table.tableComponent tr:nth-child(odd)
-            {
-                background-color: #eee;
-            }
-            table.tableComponent tbody tr:hover {
-                background-color: #222;
-                color: white;
-                cursor: pointer;
-            }
+			html{background-color:#D3DADE;margin:0;padding:0;}
+			body,#bodyTable,#bodyCell,#bodyCell{height:100%!important;font-size:12px;margin:0;padding:0;width:100%!important;font-family:Helvetica,Arial,"Lucida Grande",sans-serif;}
+			table{border-collapse:collapse;}
+			img,a img{border:0;outline:none;text-decoration:none;height:auto;line-height:100%;}
+			a{text-decoration:none!important;border-bottom:1px solid;}
+			h1,h2,h3,h4,h5,h6{color:#5F5F5F; font-weight:normal; font-family:Helvetica;font-size:20px;line-height:125%;text-align:Left;letter-spacing:normal;margin:0;margin-bottom:10px;padding:0;}
+			body, #bodyTable{background-color:#D3DADE;color:#7A7A7A;}
+            #emailBody{background-color:#FFFFFF;border:0;}
+            #emailHeader{color:#FFFFFF;background-color:#EC6608;}
+            #emailFooter{background-color:#3B4A56}
+            #emailFooter #footerImage{text-align:center;}
+            table.tableComponent{width:100%;border-collapse:collapse;}
+            table.tableComponent th{height:30px;text-align:center;vertical-align:center;background-color:#555;color:white;}
+            table.tableComponent td{padding:5px;}
+            .tableComponent tr:nth-child(odd){background-color:#eee;}
+            .textContent h1{color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;}
+            .textContent #headerInfo{text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;}
+            .success{color:#3AA57B;}
+            .failure{color:#DD2515;}
+            .breakpoint{color:#DD2515;}
 		</style>
 	</head>
-	<body bgcolor="#67707C" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-		<center style="background-color:#E1E1E1;">
-			<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;">
+	<body>
+		<center>
+			<table id="bodyTable" cellpadding="0" cellspacing="0" height="100%" width="100%">
 				<tr>
-					<td align="center" valign="top" id="bodyCell">
+					<td id="bodyCell" align="center" valign="top" >
 						
-						<table bgcolor="#FFFFFF"  border="0" cellpadding="0" cellspacing="0" width="700" id="emailBody">
+						<table id="emailBody" border="0" cellpadding="0" cellspacing="0" width="700">
 
                             <!-- HEADER -->
 							<tr>
 								<td align="center" valign="top">
-									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="color:#FFFFFF;" bgcolor="#EC6608">
+									<table id="emailHeader" border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td align="center" valign="top">
                                                 
-												<table border="0" cellpadding="0" cellspacing="0" width="700" class="flexibleContainer">
+												<table border="0" cellpadding="0" cellspacing="0" width="700">
 													<tr>
-														<td align="center" valign="top" width="700" class="flexibleContainerCell">
+														<td align="center" valign="top" width="700">
 
 															<table border="0" cellpadding="30" cellspacing="0" width="100%">
 																<tr>
-																	<td align="center" valign="top" class="textContent">
-                                                                        <h1 style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;">
+																	<td class="textContent" align="center" valign="top">
+                                                                        <h1>
                                                                             e2e Test Results
                                                                         </h1>
-                                                                        <div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;">
+                                                                        <div id="headerInfo">
                                                                             <p>These are the results for the test on TODAYDATE.</p>
                                                                         </div>
 																	</td>
 																</tr>
 															</table>
-
 														</td>
 													</tr>
 												</table>
@@ -99,16 +69,16 @@
 								</td>
 							</tr>
 
-                            <!-- ACTIONS -->
+                            <!-- CASES -->
 							<tr>
 								<td align="center" valign="top">
 									<!-- CENTERING TABLE // -->
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td align="center" valign="top">
-												<table border="0" cellpadding="0" cellspacing="0" width="700" class="flexibleContainer">
+												<table border="0" cellpadding="0" cellspacing="0" width="700">
 													<tr>
-														<td align="center" valign="top" width="700" class="flexibleContainerCell">
+														<td align="center" valign="top" width="700">
 															<table border="0" cellpadding="30" cellspacing="0" width="100%">
 																<tr>
 																	<td align="center" valign="top">
@@ -118,16 +88,15 @@
 																				<td valign="top" class="textContent">
                                                                                     <h2>CASE NAME</h2>
 
-                                                                                    <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:12px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">
+                                                                                    <div>
                                                                                         Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.    
                                                                                     </div>
 
                                                                                     <br/>
 
-                                                                                    <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">
+                                                                                    <h3>
                                                                                         Actions
                                                                                     </h3>
-
 
                                                                                     <table class="tableComponent">
                                                                                         <thead>
@@ -141,26 +110,26 @@
                                                                                             <tr>
                                                                                                 <td>2019-08-20 09:47:27</td>
                                                                                                 <td>visit</td>
-                                                                                                <td  style="color: #3AA57B">✔</td>
+                                                                                                <td class="success">✔</td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td>2019-08-20 09:47:29</td>
                                                                                                 <td>click</td>
-                                                                                                <td  style="color: #3AA57B">✔</td> 
+                                                                                                <td class="success">✔</td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td>2019-08-20 09:47:2</td>
                                                                                                 <td>read</td>
-                                                                                                <td style="color: #DD2515">✘</td> 
+                                                                                                <td class="failure">✘</td> 
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
 
                                                                                     <br/>
-                                                                                    <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">
+                                                                                    <h3>
                                                                                         Results
                                                                                     </h3>
-                                                                                    <div style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:12px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">
+                                                                                    <div>
                                                                                         
                                                                                         <ul class="resultlist">
                                                                                             <li style="color: #3AA57B">3 Passed</li>
@@ -168,16 +137,15 @@
                                                                                         </ul>
 
                                                                                     </div>
-                                                                                    <h3 style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">
+                                                                                    <h3>
                                                                                         Breakpoint
                                                                                     </h3>
-                                                                                    <div style="padding: 5px; color: #DD2515; font-size: 12px;">
+                                                                                    <div class="breakpoint">
                                                                                         asdf
                                                                                     </div>
 																				</td>
 																			</tr>
 																		</table>
-
 																	</td>
 																</tr>
 															</table>
@@ -197,9 +165,9 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td align="center" valign="top">
-												<table border="0" cellpadding="0" cellspacing="0" width="700" class="flexibleContainer" style="background-color: #3B4A56">
+												<table id="emailFooter" border="0" cellpadding="0" cellspacing="0" width="700">
 													<tr>
-														<td align="center" valign="top" width="700" class="flexibleContainerCell">
+														<td align="center" valign="top" width="700">
 															<table border="0" cellpadding="30" cellspacing="0" width="100%">
 																<tr>
 																	<td align="center" valign="top">
@@ -207,13 +175,12 @@
 																		<table border="0" cellpadding="0" cellspacing="0" width="100%">
 																			<tr>
 																				<td valign="top" class="textContent">
-                                                                                    <div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:12px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">
+                                                                                    <div id="footerImage">
                                                                                        <img src="https://www.opuscapita.com/images/logo_white.png"/>
                                                                                     </div>
 																				</td>
 																			</tr>
 																		</table>
-
 																	</td>
 																</tr>
 															</table>
@@ -225,7 +192,6 @@
 									</table>
 								</td>
 							</tr>
-
 						</table>
 					</td>
 				</tr>

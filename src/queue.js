@@ -4,7 +4,6 @@ const { Action } = require('./action');
 
 class Queue
 {
-    /* ================ CONSTRUCTOR ================ */
     /**
      * @constructor 
      */
@@ -14,7 +13,6 @@ class Queue
         this.size = 0;
     }
 
-    /* ================== GETTERS ================== */
     /**
      * Gets the next item and removes it from the queue.
      * @method getNextItem
@@ -40,7 +38,6 @@ class Queue
         return this.size;
     }
 
-/* ================== SETTERS ================== */
     /**
      * Add an item (action) to the queue.
      * @method setNewAction

@@ -2,7 +2,6 @@
 
 class Action
 {
-    /* ================ CONSTRUCTOR ================ */
     /**
      * @constructor
      * @param { object } data
@@ -14,7 +13,6 @@ class Action
         this.state = false;
     }
 
-    /* ================== GETTERS ================== */
     /**
      * Gets the state of the current action.
      * @method getState
@@ -46,7 +44,6 @@ class Action
         return this.data.title;
     }
 
-    /* ================== SETTERS ================== */
     /**
      * Sets state of the current action.
      * @method setState

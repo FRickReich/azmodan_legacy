@@ -3,11 +3,16 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const { getFilesInDirectory, clearDirectory, formatDateToday, showStep, generateHtmlOutput } = require('./utils');
+const {
+    getFilesInDirectory,
+    clearDirectory,
+    formatDateToday,
+    showStep,
+    generateHtmlOutput
+} = require('./utils');
 
 class EmailOutput
 {
-    /* ================ CONSTRUCTOR ================ */
     /**
      * @constructor
      * @param { object } data
@@ -22,13 +27,6 @@ class EmailOutput
         this.sendMail();
     }
 
-    /* ================== GETTERS ================== */
-    
-
-    /* ================== SETTERS ================== */
-    
-
-    /* ================= FUNCTIONS ================= */
     sendMail()
     {
         this.screenshots = getFilesInDirectory(this.screenshotDirectory);
@@ -72,18 +70,7 @@ class EmailOutput
                 console.log(err);
             }
 
-            fs.readdir('./screenshots', (err, files) => 
-            {
-                if (err) throw err;
-
-                for (const file of files)
-                {
-                    fs.unlink(path.join('./screenshots', file), err => 
-                    {
-                        if (err) throw err;
-                    });
-                }
-            });
+            clearDirectory('./screenshots');
         });
     }
 }

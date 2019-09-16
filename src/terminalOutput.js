@@ -3,11 +3,13 @@
 const CliTable = require('tabletops');
 const color = require("cli-color");
 
-const { formatDate, verifyDate } = require('./utils');
+const {
+    formatDate,
+    verifyDate
+} = require('./utils');
     
 class TerminalOutput
 {
-    /* ================ CONSTRUCTOR ================ */
     /**
      * @constructor
      * @param { object } data
@@ -35,7 +37,6 @@ class TerminalOutput
         ];
     }
 
-    /* ================== GETTERS ================== */
     getTitle()
     {
         return this.title;
@@ -46,13 +47,11 @@ class TerminalOutput
         return this.columns;
     }
 
-    /* ================== SETTERS ================== */
     setTitle(title)
     {
         this.title = title;
     }
 
-    /* ================= FUNCTIONS ================= */
     /**
      * Creates a new table.
      * @method createTable

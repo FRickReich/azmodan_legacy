@@ -28,7 +28,7 @@ const showResults = (results) =>
 }
 
 /**
- * Shows results of all test-cases.
+ * Displays the current test-step in the terminal.
  * @function showStep
  * @param { object } results 
  */

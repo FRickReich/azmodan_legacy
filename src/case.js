@@ -2,14 +2,13 @@
 
 require('dotenv').config();
 
+const { Queue } = require('./queue');
 const {
     readYamlFile
 } = require('./utils');
-const { Queue } = require('./queue');
 
 class Case
 {
-    /* ================ CONSTRUCTOR ================ */
     /**
      * @constructor
      * @param { object } data
@@ -25,7 +24,6 @@ class Case
         this.setQueue(caseData.actions);
     }
 
-    /* ================== GETTERS ================== */
     /**
      * Gets the title of the current case.
      * @method getTitle
@@ -36,7 +34,6 @@ class Case
         return this.title;
     }
 
-    /* ================== SETTERS ================== */
     /** 
      * Sets the title of the current case.
      * @method setTitle
@@ -59,9 +56,6 @@ class Case
             this.queue.setNewItem(item);
         });
     }
-    
-    /* ================= FUNCTIONS ================= */
-    
 }
 
 module.exports = { Case };
