@@ -1,7 +1,7 @@
 'use strict';
 
-const nodemailer = require('nodemailer');
 require('dotenv').config();
+const nodemailer = require('nodemailer');
 
 const {
     getFilesInDirectory,
@@ -22,7 +22,10 @@ class EmailOutput
         this.results = results;
         this.currentDate = new Date();
         this.screenshots = [];
-        this.screenshotDirectory = './screenshots'
+        this.screenshotDirectory = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots'
+
+
+        
 
         this.sendMail();
     }

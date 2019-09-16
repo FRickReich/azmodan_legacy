@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const puppeteer = require('puppeteer');
 
 const { TerminalOutput } = require('./terminalOutput');
@@ -292,8 +293,10 @@ class Test
                         terminal.createRow("", currentAction.getDescription(), false);
                     }
 
+                    const screenshotFolder = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots';
+
                     await page.waitFor(1000);
-                    await page.screenshot({ path: `screenshots/screenshot_${ caseTitle }_${ index }_${ new Date().getTime() }.png`, fullPage: true });
+                    await page.screenshot({ path: `${screenshotFolder}/screenshot_${ caseTitle }_${ index }_${ new Date().getTime() }.png`, fullPage: true });
 
                     break;
                 }

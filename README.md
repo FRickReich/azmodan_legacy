@@ -3,11 +3,13 @@
 An end-to-end testing framework driven by puppeteer and the magic of yaml.
 
 ## Overview
+
 The application runs a set of actions for different cases, defined by yaml files.
 
 ## Usage
 
 ### Creating a case
+
 the following is a step by step description of the creating of the example files supplied with the application.
 
 1.) Create a directory (``cases`` by default) in the application root#
@@ -41,64 +43,91 @@ this will give the case the title "google search", and give the case the followi
 - press enter
 
 ### Running the application
+
 type ```npm start``` after you have defined one or more cases.
 
-### Possible action types
+## Possible action types
 
-#### ``visit``
+### ``visit``
+
 Visits a URL, this is needed for any other steps to follow.
 
 **Options**
 
-| Title       | Type   | required | Description                                     | Example                           |
-| ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
-| url         | string | true     | The target URL.                                 | https://www.google.com/           |
-| description | string | true     | A short description of the action.              | open google.com                   |
-| delay       | number | false    | Delay in milliseconds before action is invoked. | 5000                              |
+| Title       | Type     | required | Description                                     | Example                             |
+| ----------- | -------- | -------- | ----------------------------------------------- | ----------------------------------- |
+| url         | `string` | true     | The target URL.                                 | https://www.google.com/             |
+| description | `string` | false    | A short description of the action.              | open google.com                     |
+| error       | `string` | false    | Error message shown on failure.                 | could not find domain google.com.   |
+| delay       | `number` | false    | Delay in milliseconds before action is invoked. | 5000                                |
 
-#### ``fill``
+### ``fill``
+
 Fills in an input field.
 
 **Options**
 
-| Title       | Type   | required | Description                                     | Example                           |
-| ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
-| target      | string | true     | The target dom-element.                         | input[name=q]                     |
-| content     | string | true     | The content to be filled into the input field.  | Hello world                       |
-| description | string | true     | A short description of the action.              | type "Hello world" into searchbar |
-| delay       | number | string   | Delay in milliseconds before action is invoked. | 5000                              |
+| Title       | Type     | required | Description                                     | Example                             |
+| ----------- | -------- | -------- | ----------------------------------------------- | ----------------------------------- |
+| target      | `string` | true     | The target dom-element.                         | input[name=q]                       |
+| content     | `string` | true     | The content to be filled into the input field.  | Hello world                         |
+| description | `string` | false    | A short description of the action.              | type "Hello world" into searchbar   |
+| error       | `string` | false    | Error message shown on failure.                 | could not populate searchbar.       |
+| delay       | `number` | string   | Delay in milliseconds before action is invoked. | 5000                                |
 
-#### ``click``
+### ``click``
+
 Clicks on a specified dom-element.
 
 **Options**
 
-| Title       | Type   | required | Description                                     | Example                           |
-| ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
-| target      | string | true     | The target dom-element.                         | #login                            |
-| description | string | true     | A short description of the action.              | click on login button             |
-| delay       | number | string   | Delay in milliseconds before action is invoked. | 5000                              |
+| Title       | Type     | required | Description                                     | Example                             |
+| ----------- | -------- | -------- | ----------------------------------------------- | ----------------------------------- |
+| target      | `string` | true     | The target dom-element.                         | #login                              |
+| description | `string` | false    | A short description of the action.              | click on login button               |
+| error       | `string` | false    | Error message shown on failure.                 | could not click on button "login".  |
+| delay       | `number` | string   | Delay in milliseconds before action is invoked. | 5000                                |
 
-#### ``press``
+### ``press``
+
 Presses a key.
 
 **Options**
 
-| Title       | Type   | required | Description                                     | Example                           |
-| ----------- | ------ | -------- | ----------------------------------------------- | --------------------------------- |
-| key         | string | true     | The target dom-element.                         | Enter                             |
-| description | string | true     | A short description of the action.              | Press Enter                       |
-| delay       | number | string   | Delay in milliseconds before action is invoked. | 5000                              |
+| Title       | Type     | required | Description                                     | Example                             |
+| ----------- | -------- | -------- | ----------------------------------------------- | ----------------------------------- |
+| key         | `string` | true     | The target dom-element.                         | Enter                               |
+| description | `string` | true     | A short description of the action.              | press Enter                         |
+| error       | `string` | false    | Error message shown on failure.                 | could not click button "Enter".     |
+| delay       | `number` | string   | Delay in milliseconds before action is invoked. | 5000                                |
 
-#### ``console``
+### ``console``
+
 Reads out the console.
 
-#### ``read``
+[MISSING]
+
+### ``read``
+
 Checks a mailbox for mails with a predefined subject.
 
-### Results
+[MISSING]
+
+## Results
 
 after all tests have finished, the application will show an overview of the results in the terminal and send an email to specified recievers. If a test failed, the email will have a screenshot attached, taken on the cases target, at the position the test canceled.
+
+## .env file
+
+| Property               | Type     | Description                                                           |
+| ---------------------- | -------- | --------------------------------------------------------------------- |
+| EMAIL_SENDING_USER     | `string` | The user sending the results-email.                                   |
+| EMAIL_SENDING_PASSWORD | `string` | The password of the user sending results email.                       |
+| EMAIL_SENDING_SERVER   | `string` | The server of the user sending the results email.                     |
+| EMAIL_SENDING_PORT     | `number` | The port of the server sending the results email.                     |
+| EMAIL_SENDING_TARGET   | `array`  | One or more targets that will recieve the results email.              |
+| CASE_FOLDER            | `string` | The folder where the test-cases are located. [DEFAULT: 'cases']       |
+| SCREENSHOTS_FOLDER     | `string` | The folder where the test-cases are located. [DEFAULT: 'screenshots'] |
 
 ## Dependencies
 - cli-color (1.4.0)   - Displays state-colors in terminal.

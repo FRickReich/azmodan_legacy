@@ -34,7 +34,11 @@ class Action
         return this.data[key];
     }
 
-    
+    /**
+     * Gets the error message that was thrown after the current test-case failed.
+     * @method getErrorMessage
+     * @returns { string }
+     */
     getErrorMessage()
     {
         return this.data.error;

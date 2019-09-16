@@ -15,7 +15,7 @@ class Case
      */
     constructor(data)
     {
-        const caseData = readYamlFile(`./${process.env.CASE_FOLDER}`, data);
+        const caseData = readYamlFile(process.env.CASE_FOLDER ? `./${ process.env.CASE_FOLDER }` : './cases', data);
 
         this.title = "";
         this.queue = new Queue();

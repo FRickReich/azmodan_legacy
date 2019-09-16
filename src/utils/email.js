@@ -6,8 +6,14 @@ const {
     verifyDate
 } = require('./time');
 
+/**
+ * Generates an email-validated html body with the results of all test-cases.
+ * @function generateHtmlOutput
+ * @param { object} results 
+ */
 const generateHtmlOutput = (results) =>
 {
+    /* CSS Styles */ 
     const style = `
         html{background-color:#D3DADE;margin:0;padding:0;}
 		body,#bodyTable,#bodyCell,#bodyCell{height:100%!important;font-size:12px;margin:0;padding:0;width:100%!important;font-family:Helvetica,Arial,"Lucida Grande",sans-serif;}
@@ -43,7 +49,7 @@ const generateHtmlOutput = (results) =>
                 <title>testresults</title>
                 
                 <style type="text/css">
-                    ${style }
+                    ${ style }
                 </style>
             </head>
             <body>
