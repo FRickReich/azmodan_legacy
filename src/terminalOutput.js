@@ -32,7 +32,7 @@ class TerminalOutput
                 width: 21
             },
             {
-                key: 'action',
+                key: 'description',
                 title: 'Action',
                 width: 45
             },
