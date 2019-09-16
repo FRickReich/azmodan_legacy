@@ -318,7 +318,7 @@ class Test
                     time: {
                         start: this.getStartTime(),
                         end: this.getEndTime(),
-                        running: this.calculateRunningTime(),
+                        running: this.calculateRunningTime()
                     },
                     state: this.getState(),
                     actions: this.getActions(),
