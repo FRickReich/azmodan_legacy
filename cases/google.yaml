@@ -2,14 +2,17 @@ title: 'google search'
 actions:
   - type: 'visit'
     url: 'https://www.google.com/'
-    title: 'open google.com'
+    description: 'open google.com'
+    error: 'could not find domain google.com'
 
   - type: 'fill'
     target: 'input[dname=q]'
     content: 'Hello world'
-    title: 'type "Hello world" into searchbar'
+    description: 'type "Hello world" into searchbar'
     delay: 5000
+    error: 'could not fill searchbar'
     
   - type: 'press'
     key: 'Enter'
-    title: 'press enter'
+    description: 'press enter'
+    error: 'could not press enter'

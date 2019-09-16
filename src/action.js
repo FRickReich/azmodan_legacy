@@ -34,14 +34,20 @@ class Action
         return this.data[key];
     }
 
+    
+    getErrorMessage()
+    {
+        return this.data.error;
+    }
+
     /**
-     * Gets the title of the current action.
-     * @method getTitle
+     * Gets the description of the current action.
+     * @method getDescription
      * @returns { string }
      */
-    getTitle()
+    getDescription()
     {
-        return this.data.title;
+        return this.data.description;
     }
 
     /**

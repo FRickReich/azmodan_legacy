@@ -225,7 +225,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
                         });
                         break;
                     case 'fill':
@@ -236,7 +236,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
                         });
                         break;
                     case 'click':
@@ -247,7 +247,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
                         });
                         break;
                     case 'press':
@@ -258,7 +258,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
                         });
                         break;
                     case 'console':
@@ -267,9 +267,9 @@ class Test
                         break;
                 }
 
-                this.setActions(new Date().getTime(), currentAction.getTitle(), currentAction.getState());
+                this.setActions(new Date().getTime(), currentAction.getDescription(), currentAction.getState());
 
-                terminal.createRow(new Date().getTime(), currentAction.getTitle(), currentAction.getState());
+                terminal.createRow(new Date().getTime(), currentAction.getDescription(), currentAction.getState());
 
                 if (currentAction.getState() === false)
                 {
@@ -281,9 +281,9 @@ class Test
 
                         this.incrementFailedActionAmount();
 
-                        this.setActions(new Date().getTime(), currentAction.getTitle(), false);
+                        this.setActions(new Date().getTime(), currentAction.getDescription(), false);
 
-                        terminal.createRow("", currentAction.getTitle(), false);
+                        terminal.createRow("", currentAction.getDescription(), false);
                     }
 
                     await page.waitFor(1000);
