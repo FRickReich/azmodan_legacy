@@ -23,7 +23,7 @@ class TerminalOutput
         this.columns = [
             {
                 key: 'id',
-                title: '#',
+                title: ' #',
                 width: 4
             },
             {
@@ -137,19 +137,26 @@ class TerminalOutput
      */
     createFooter(failedActions, runTime)
     {
-        this.table.AddTableFooter( failedActions > 0 ? `canceled after ${ runTime } second(s) at #${ this.getBreakpoint() }` : `finished succesfully after ${ runTime } second(s)`);
+        this.table.AddTableFooter(
+            failedActions > 0 ? `canceled after ${ runTime } second(s) at #${ this.getBreakpoint() }` : `finished succesfully after ${ runTime } second(s)`
+        );
     }
     
     /**
      * Creates a row for the current table.
      * @method createRow
-     * @param { number } timestamp 
-     * @param { string } action 
-     * @param { boolean } state 
+     * @param { number } timestamp
+     * @param { string } description
+     * @param { boolean } state
      */
-    createRow(timestamp, action, state)
+    createRow(timestamp, description, state)
     {
-        this.table.AddTableRow({ id: this.getCounter(), date: verifyDate(timestamp) ? formatDate(timestamp) : '', action, state: state === true ? color.green("✔") : color.red("✗") });
+        this.table.AddTableRow({
+            id: this.getCounter() < 10 ? " " + this.getCounter() : this.getCounter(),
+            date: verifyDate(timestamp) ? formatDate(timestamp) : '',
+            description,
+            state: state === true ? color.green("✔") : color.red("✗")
+        });
     }
 }
 

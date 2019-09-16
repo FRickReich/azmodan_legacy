@@ -10,7 +10,7 @@ actions:
     content: 'Hello world'
     description: 'type "Hello world" into searchbar'
     delay: 5000
-    error: 'could not fill searchbar'
+    error: 'could not populate searchbar'
     
   - type: 'press'
     key: 'Enter'
