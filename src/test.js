@@ -267,6 +267,8 @@ class Test
                         break;
                 }
 
+                terminal.increaseCounter();
+                
                 this.setActions(new Date().getTime(), currentAction.getDescription(), currentAction.getState());
 
                 terminal.createRow(new Date().getTime(), currentAction.getDescription(), currentAction.getState());
@@ -275,9 +277,13 @@ class Test
                 {
                     this.incrementFailedActionAmount();
 
+                    terminal.setBreakpoint();
+
                     for (let idx = 0; idx <= this.case.queue.getSize(); idx++)
                     {       
                         const currentAction = this.case.queue.getNextItem();
+
+                        terminal.increaseCounter();
 
                         this.incrementFailedActionAmount();
 
