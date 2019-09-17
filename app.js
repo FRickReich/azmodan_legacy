@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const { EmailOutput } = require('./src/emailOutput');
+const { EmailOutput } = require('./src/');
 const { showResults, showStep } = require('./src/utils');
 
 const {
@@ -14,11 +14,17 @@ const {
     getFilesInDirectory,
 } = require('./src/utils');
 
-let caseFiles = [];
-let cases = [];
-let currentCase = 0;
-let results = [];
+const results = [];
 
+let cases;
+let caseFiles;
+let currentCase = 0;
+
+/**
+ * Populates the cases with its corresponding actions.
+ * @function populateCases
+ * @returns { array }
+ */
 const populateCases = () =>
 {
     const temp = [];
@@ -31,11 +37,16 @@ const populateCases = () =>
     return temp;
 }
 
+/**
+ * Runs the test.
+ * @function runTest
+ * @async
+ */
 const runTest = async () =>
 {
     const runningCase = cases[currentCase];
     const test = new Test(runningCase);
-
+    
     test.startTest((result) =>
     {
         results.push(result);
@@ -51,18 +62,24 @@ const runTest = async () =>
             showStep(2);
             
             showResults(results);
+
+            showStep(3);
             
             new EmailOutput(results);
         }
     });
 }
 
+/**
+ * Runs the appliction.
+ * @function init
+ */
 (function init()
 {
-    showStep(1);
-
     caseFiles = getFilesInDirectory(`./${process.env.CASE_FOLDER}`);
     cases = populateCases();
+
+    showStep(1);
 
     runTest();
 })();

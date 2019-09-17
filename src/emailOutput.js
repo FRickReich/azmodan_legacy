@@ -119,9 +119,7 @@ class EmailOutput
         const mailOptions = this.getMailSettings("options");
 
         transporter.sendMail(mailOptions, function (err, info)
-        {
-            showStep(3);
-            
+        {   
             if (err)
             {
                 console.log(err);

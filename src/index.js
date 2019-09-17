@@ -10,5 +10,6 @@ module.exports = {
     Queue,
     Case,
     Test,
-    TerminalOutput
+    TerminalOutput,
+    EmailOutput
 };
