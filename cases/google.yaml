@@ -6,7 +6,7 @@ actions:
     error: 'could not find domain google.com'
 
   - type: 'fill'
-    target: 'input[dname=q]'
+    target: 'input[name=q]'
     content: 'Hello world'
     description: 'type "Hello world" into searchbar'
     delay: 5000
@@ -14,5 +14,6 @@ actions:
     
   - type: 'press'
     key: 'Enter'
+    delay: 5000
     description: 'press enter'
     error: 'could not press enter'

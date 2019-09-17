@@ -323,6 +323,7 @@ class Test
                 {
                     if(this.getPassedActionsAmount() === this.getActionCounter() - 1)
                     {
+                        await page.waitFor(1000);
                         await page.screenshot({ path: `${this.getScreenshotFolder()}/screenshot-${ caseTitle.split(" ").join("-").toLowerCase() }_passed.png`, fullPage: true });
                     }
 
