@@ -66,6 +66,8 @@ const runTest = async () =>
             showStep(3);
             
             new EmailOutput(results);
+
+            showStep(4);
         }
     });
 }

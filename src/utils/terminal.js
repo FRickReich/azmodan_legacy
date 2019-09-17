@@ -36,7 +36,7 @@ const showStep = (step) =>
 {
     switch (step) {
         case 1:
-            console.log(color.bold("1.) Running tests"));
+            console.log(color.bold("1.) Starting test"));
             break;
         case 2:
             console.log(color.bold("2.) Showing results\n"));
@@ -44,6 +44,8 @@ const showStep = (step) =>
         case 3:
             console.log(color.bold("3.) Sending email with results\n"));
             break;
+        case 4:
+            console.log(color.bold("4.) Finished\n"));
     }
 }
 
