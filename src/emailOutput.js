@@ -23,51 +23,105 @@ class EmailOutput
         this.currentDate = new Date();
         this.screenshots = [];
         this.screenshotDirectory = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots'
-
-
-        
+        this.attachments = [];
+        this.mailSettings = [];
 
         this.sendMail();
     }
 
-    sendMail()
+    /**
+     * Gets a list of all attached screenshots.
+     * @method getAttachments
+     * @returns { array }
+     */
+    getAttachments()
+    {
+        return this.attachments;
+    }
+
+    /**
+     * Gets the mailer settings for transporter and options.
+     * @method getMailSettings
+     * @returns { object }
+     */
+    getMailSettings(section)
+    {
+        return this.mailSettings[section];
+    }
+
+    /**
+     * Gets the results of the test.
+     * @method getResults
+     * @returns { object }
+     */
+    getResults()
+    {
+        return this.results;
+    }
+
+    /**
+     * Sets up a list of screenshots to attach.
+     * @method setAttachments
+     */
+    setAttachments()
     {
         this.screenshots = getFilesInDirectory(this.screenshotDirectory);
-
-        showStep(3);
-
-        const attachments = this.screenshots.map((file) =>
+        
+        this.attachments = this.screenshots.map((file) =>
         {
             return { filename: file, path: this.screenshotDirectory + '/' + file };
         });
+    }
 
-        const transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_SENDING_SERVER,
-            port: process.env.EMAIL_SENDING_PORT,
-            secure: false,
-            auth:
-            {
-                user: process.env.EMAIL_SENDING_USER,
-                pass: process.env.EMAIL_SENDING_PASSWORD
-            },
-            tls:
-            {
-                ciphers: 'SSLv3'
-            },
-            requireTLS: true
-        });
-
-        const mailOptions =
+    /**
+     * Sets up the mailer.
+     * @method setMailSettings
+     */
+    setMailSettings()
+    {
+        this.mailSettings = 
         {
-            from: process.env.EMAIL_SENDING_USER,
-            to: process.env.EMAIL_SENDING_TARGET.split(","),
-            subject: `Test results for ${ formatDateToday(this.currentDate) }`,
-            html: generateHtmlOutput(this.results),
-            attachments: attachments
-        };
+            transporter: {
+                host: process.env.EMAIL_SENDING_SERVER,
+                port: process.env.EMAIL_SENDING_PORT,
+                secure: false,
+                auth:
+                {
+                    user: process.env.EMAIL_SENDING_USER,
+                    pass: process.env.EMAIL_SENDING_PASSWORD
+                },
+                tls:
+                {
+                    ciphers: 'SSLv3'
+                },
+                requireTLS: true
+            },
+            options: {
+                from: process.env.EMAIL_SENDING_USER,
+                to: process.env.EMAIL_SENDING_TARGET.split(","),
+                subject: `Test results for ${ formatDateToday(this.currentDate) }`,
+                html: generateHtmlOutput(this.getResults()),
+                attachments: this.getAttachments()
+            }
+        }
+    }
+
+    /**
+     * Sends the result-email to recipients set in .env file.
+     * @method sendMail
+     */
+    sendMail()
+    {
+        this.setAttachments();
+        this.setMailSettings();
+
+        const transporter = nodemailer.createTransport(this.getMailSettings("transporter"));
+        const mailOptions = this.getMailSettings("options");
 
         transporter.sendMail(mailOptions, function (err, info)
         {
+            showStep(3);
+            
             if (err)
             {
                 console.log(err);

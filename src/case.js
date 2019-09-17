@@ -34,6 +34,36 @@ class Case
         return this.title;
     }
 
+    /**
+     * Gets all actions in the queue.
+     * @method getQueue
+     * @returns { object }
+     */
+    getQueue()
+    {
+        return this.queue;
+    }
+
+    /**
+     * Gets the size of the current queue.
+     * @method getQueueSize
+     * @returns { number }
+     */
+    getQueueSize()
+    {
+        return this.queue.getSize();
+    }
+
+    /**
+     * Gets the next item in the current queue.
+     * @method getNextItemInQueue
+     * @returns { object }
+     */
+    getNextItemInQueue()
+    {
+        return this.queue.getNextItem();
+    }
+
     /** 
      * Sets the title of the current case.
      * @method setTitle
@@ -45,7 +75,7 @@ class Case
     }
 
     /**
-     * Populates the cases queue with all actions from the list.
+     * Populates cases queue with all actions from the list.
      * @method setQueue
      * @param { array } actions
      */

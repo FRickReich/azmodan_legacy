@@ -17,11 +17,11 @@ class Test
     constructor(caseData)
     {
         this.case = caseData;
-        this.actionCounter = caseData.queue.getSize();
+        this.actionCounter = this.case.getQueueSize();
         this.startTime;
         this.endTime;
         this.state = false;
-        this.actions = [];
+        this.actions = [  ];
         this.passedActions = 0;
         this.failedActions = 0;
         this.failureMessage = '';
@@ -209,7 +209,7 @@ class Test
 
             for (let index = 0; index < this.actionCounter; index++)
             {
-                const currentAction = this.case.queue.getNextItem();
+                const currentAction = this.case.getNextItemInQueue();
 
                 if (currentAction.getData('delay'))
                 {
@@ -280,9 +280,9 @@ class Test
 
                     terminal.setBreakpoint();
 
-                    for (let idx = 0; idx <= this.case.queue.getSize(); idx++)
+                    for (let idx = 0; idx <= this.case.getQueueSize(); idx++)
                     {       
-                        const currentAction = this.case.queue.getNextItem();
+                        const currentAction = this.case.getNextItemInQueue();
 
                         terminal.increaseCounter();
 
