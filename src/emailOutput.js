@@ -21,10 +21,10 @@ class EmailOutput
     {
         this.results = results;
         this.currentDate = new Date();
-        this.screenshots = [];
+        this.screenshots = [  ];
         this.screenshotDirectory = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots'
-        this.attachments = [];
-        this.mailSettings = [];
+        this.attachments = [  ];
+        this.mailSettings = [  ];
 
         this.sendMail();
     }

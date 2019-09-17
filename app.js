@@ -14,7 +14,7 @@ const {
     getFilesInDirectory,
 } = require('./src/utils');
 
-const results = [];
+const results = [  ];
 
 let cases;
 let caseFiles;
@@ -27,7 +27,7 @@ let currentCase = 0;
  */
 const populateCases = () =>
 {
-    const temp = [];
+    const temp = [  ];
 
     caseFiles.forEach(file =>
     {
