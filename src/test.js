@@ -25,6 +25,7 @@ class Test
         this.passedActions = 0;
         this.failedActions = 0;
         this.failureMessage = '';
+        this.screenshotFolder = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots';
     }
 
     /**
@@ -68,6 +69,16 @@ class Test
     }
 
     /**
+     * Gets the count of all actions in current case.
+     * @method getActionCounter
+     * @returns { number }
+     */
+    getActionCounter()
+    {
+        return this.actionCounter;
+    }
+
+    /**
      * ON FAILED: Gets the failure message of the current test-case.
      * @method getFailureMessage
      * @returns { string }
@@ -95,6 +106,16 @@ class Test
     getFailedActionsAmount()
     {
         return this.failedActions;
+    }
+
+    /**
+     * Gets the screenshot folders name.
+     * @method getScreenshotFolder
+     * @return { string }
+     */
+    getScreenshotFolder()
+    {
+        return this.screenshotFolder;
     }
 
     /**
@@ -293,15 +314,18 @@ class Test
                         terminal.createRow("", currentAction.getDescription(), false);
                     }
 
-                    const screenshotFolder = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots';
-
                     await page.waitFor(1000);
-                    await page.screenshot({ path: `${screenshotFolder}/screenshot_${ caseTitle }_${ index }_${ new Date().getTime() }.png`, fullPage: true });
+                    await page.screenshot({ path: `${this.getScreenshotFolder()}/screenshot_${ caseTitle.split(" ").join("-").toLowerCase() }_step${ terminal.getBreakpoint() }_error.png`, fullPage: true });
 
                     break;
                 }
                 else
                 {
+                    if(this.getPassedActionsAmount() === this.getActionCounter() - 1)
+                    {
+                        await page.screenshot({ path: `${this.getScreenshotFolder()}/screenshot-${ caseTitle.split(" ").join("-").toLowerCase() }_passed.png`, fullPage: true });
+                    }
+
                     this.incrementPassedActionAmount();
                     this.setState(true);
                 }

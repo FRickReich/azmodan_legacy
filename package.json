@@ -15,7 +15,7 @@
         "imap-simple": "^4.3.0",
         "js-yaml": "^3.13.1",
         "nodemailer": "^6.3.0",
-        "puppeteer": "^1.19.0",
+        "puppeteer": "^1.20.0",
         "tabletops": "^0.1.4"
     }
 }

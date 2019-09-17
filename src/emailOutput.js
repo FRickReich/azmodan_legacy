@@ -7,7 +7,6 @@ const {
     getFilesInDirectory,
     clearDirectory,
     formatDateToday,
-    showStep,
     generateHtmlOutput
 } = require('./utils');
 
@@ -81,7 +80,8 @@ class EmailOutput
     {
         this.mailSettings = 
         {
-            transporter: {
+            transporter:
+            {
                 host: process.env.EMAIL_SENDING_SERVER,
                 port: process.env.EMAIL_SENDING_PORT,
                 secure: false,
@@ -96,7 +96,8 @@ class EmailOutput
                 },
                 requireTLS: true
             },
-            options: {
+            options:
+            {
                 from: process.env.EMAIL_SENDING_USER,
                 to: process.env.EMAIL_SENDING_TARGET.split(","),
                 subject: `Test results for ${ formatDateToday(this.currentDate) }`,
