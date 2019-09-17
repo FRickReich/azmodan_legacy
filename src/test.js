@@ -247,7 +247,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
                         });
                         break;
                     case 'fill':
@@ -258,7 +258,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
                         });
                         break;
                     case 'click':
@@ -269,7 +269,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
                         });
                         break;
                     case 'press':
@@ -280,7 +280,7 @@ class Test
                         {
                             currentAction.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? currentAction.getErrorMessage() : e);
+                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
                         });
                         break;
                     case 'console':
