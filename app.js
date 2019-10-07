@@ -21,7 +21,7 @@ let caseFiles;
 let currentCase = 0;
 
 /**
- * Populates the cases with its corresponding actions.
+ * Populates the cases with its corresponding step.
  * @function populateCases
  * @returns { array }
  */
@@ -31,7 +31,10 @@ const populateCases = () =>
 
     caseFiles.forEach(file =>
     {
-        temp.push(new Case(file));
+        if (file !== '.DS_Store')
+        {
+            temp.push(new Case(file));
+        }
     });
 
     return temp;
@@ -78,7 +81,8 @@ const runTest = async () =>
  */
 (function init()
 {
-    caseFiles = getFilesInDirectory(`./${process.env.CASE_FOLDER}`);
+    caseFiles = getFilesInDirectory(`./${ process.env.CASE_FOLDER }`);
+
     cases = populateCases();
 
     showStep(1);

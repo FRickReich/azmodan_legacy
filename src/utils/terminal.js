@@ -13,8 +13,8 @@ const showResults = (results) =>
     {
         console.log(color.bold.underline(`Results for "${ result.caseTitle }":`));
 
-        result.amount.passed && console.log(color.green(`- ${result.amount.passed === result.actions.length ? 'all' : result.amount.passed } passed`));
-        result.amount.failed && console.log(color.red(`- ${result.amount.failed === result.actions.length ? 'all' : result.amount.failed } failed`));
+        result.amount.passed && console.log(color.green(`- ${result.amount.passed === result.steps.length ? 'all' : result.amount.passed } passed`));
+        result.amount.failed && console.log(color.red(`- ${result.amount.failed === result.steps.length ? 'all' : result.amount.failed } failed`));
 
         if (result.failureMessage)
         {

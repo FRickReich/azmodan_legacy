@@ -33,7 +33,7 @@ class TerminalOutput
             },
             {
                 key: 'description',
-                title: 'Action',
+                title: 'Step',
                 width: 45
             },
             {
@@ -135,10 +135,10 @@ class TerminalOutput
      * Creates the footer of the current table.
      * @method createFooter
      */
-    createFooter(failedActions, runTime)
+    createFooter(failedSteps, runTime)
     {
         this.table.AddTableFooter(
-            failedActions > 0 ? `canceled after ${ runTime } second(s) at #${ this.getBreakpoint() }` : `finished succesfully after ${ runTime } second(s)`
+            failedSteps > 0 ? `canceled after ${ runTime } second(s) at #${ this.getBreakpoint() }` : `finished succesfully after ${ runTime } second(s)`
         );
     }
     

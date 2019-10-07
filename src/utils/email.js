@@ -123,26 +123,26 @@ const generateHtmlOutput = (results) =>
                                                                                                         <br/>
 
                                                                                                         <h3>
-                                                                                                            Actions
+                                                                                                            Steps
                                                                                                         </h3>
 
                                                                                                         <table class="tableComponent">
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <th width="30%">Date</th>
-                                                                                                                    <th width="55%">Action</th>
+                                                                                                                    <th width="55%">Step</th>
                                                                                                                     <th width="15%">State</th>
                                                                                                                 </tr>
                                                                                                             </thead>
                                                                                                             <tbody>
                                                                                                             ${
-                                                                                                                result.actions.map(action =>
+                                                                                                                result.steps.map(step =>
                                                                                                                 {
                                                                                                                     return `
                                                                                                                         <tr>
-                                                                                                                            <td>${ verifyDate(action.timestamp) ? formatDate(action.timestamp) : '' }</td>
-                                                                                                                            <td>${ action.description || action.type }</td>
-                                                                                                                            <td class="${ action.state === true ? 'success' : 'failure' }"">${ action.state === true ? '✔' : '✘' }</td>
+                                                                                                                            <td>${ verifyDate(step.timestamp) ? formatDate(step.timestamp) : '' }</td>
+                                                                                                                            <td>${ step.description || step.type }</td>
+                                                                                                                            <td class="${ step.state === true ? 'success' : 'failure' }"">${ step.state === true ? '✔' : '✘' }</td>
                                                                                                                         </tr>
                                                                                                                     `
                                                                                                                 })

@@ -1,6 +1,6 @@
 'use strict';
 
-class Action
+class Step
 {
     /**
      * @constructor
@@ -14,7 +14,7 @@ class Action
     }
 
     /**
-     * Gets the state of the current action.
+     * Gets the state of the current step.
      * @method getState
      * @returns { boolean }
      */
@@ -45,7 +45,7 @@ class Action
     }
 
     /**
-     * Gets the description of the current action.
+     * Gets the description of the current step.
      * @method getDescription
      * @returns { string }
      */
@@ -55,7 +55,7 @@ class Action
     }
 
     /**
-     * Sets state of the current action.
+     * Sets state of the current step.
      * @method setState
      * @param { object } state 
      */
@@ -76,4 +76,4 @@ class Action
     }
 }
 
-module.exports = { Action };
+module.exports = { Step };

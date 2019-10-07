@@ -17,13 +17,13 @@ class Test
     constructor(caseData)
     {
         this.case = caseData;
-        this.actionCounter = this.case.getQueueSize();
+        this.stepCounter = this.case.getQueueSize();
         this.startTime;
         this.endTime;
         this.state = false;
-        this.actions = [  ];
-        this.passedActions = 0;
-        this.failedActions = 0;
+        this.steps = [  ];
+        this.passedSteps = 0;
+        this.failedSteps = 0;
         this.failureMessage = '';
         this.screenshotFolder = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots';
     }
@@ -59,23 +59,23 @@ class Test
     }
 
     /**
-     * Gets a list of all actions that are part of the current test-case.
-     * @method getActions
+     * Gets a list of all steps that are part of the current test-case.
+     * @method getSteps
      * @returns { object }
      */
-    getActions()
+    getSteps()
     {
-        return this.actions;
+        return this.steps;
     }
 
     /**
-     * Gets the count of all actions in current case.
-     * @method getActionCounter
+     * Gets the count of all steps in current case.
+     * @method getStepCounter
      * @returns { number }
      */
-    getActionCounter()
+    getStepCounter()
     {
-        return this.actionCounter;
+        return this.stepCounter;
     }
 
     /**
@@ -89,23 +89,23 @@ class Test
     }
 
     /**
-     * Gets the amount of passed actions.
-     * @method getPassedActionsAmount
+     * Gets the amount of passed steps.
+     * @method getPassedStepsAmount
      * @returns { number }
      */
-    getPassedActionsAmount()
+    getPassedStepsAmount()
     {
-        return this.passedActions;    
+        return this.passedSteps;    
     }
 
     /**
-     * Gets the amount of failed actions.
-     * @method getFailedActionsAmount
+     * Gets the amount of failed steps.
+     * @method getFailedStepsAmount
      * @returns { number }
      */
-    getFailedActionsAmount()
+    getFailedStepsAmount()
     {
-        return this.failedActions;
+        return this.failedSteps;
     }
 
     /**
@@ -129,15 +129,15 @@ class Test
     }
 
     /**
-     * Sets the actions taken in the current test-case.
-     * @method setActions
+     * Sets the steps taken in the current test-case.
+     * @method setSteps
      * @param { number } timestamp
      * @param { string } description
      * @param { bool } state
      */
-    setActions(timestamp, description, state)
+    setSteps(timestamp, description, state)
     {
-        this.actions.push(
+        this.steps.push(
             {
                 timestamp,
                 description,
@@ -157,20 +157,20 @@ class Test
     }
 
     /**
-     * Increments the amount of passed actions.
-     * @method incrementPassedActionAmount
+     * Increments the amount of passed steps.
+     * @method incrementPassedStepAmount
      */
-    incrementPassedActionAmount()
+    incrementPassedStepAmount()
     {
-        this.passedActions++;
+        this.passedSteps++;
     }
     /**
-     * Increments the amount of failed actions.
-     * @method incrementFailedActionAmount
+     * Increments the amount of failed steps.
+     * @method incrementFailedStepsAmount
      */
-    incrementFailedActionAmount()
+    incrementFailedStepAmount()
     {
-        this.failedActions++;
+        this.failedSteps++;
     }
 
     /**
@@ -189,7 +189,7 @@ class Test
      */
     calculateRunningTime()
     {
-        return handleTimeDifference(this.startTime, this.actions[this.actions.length - 1].timestamp);
+        return handleTimeDifference(this.startTime, this.steps[this.steps.length - 1].timestamp);
     }
 
     /**
@@ -198,7 +198,7 @@ class Test
      */
     calculateEndTime()
     {
-        this.endTime = this.actions[this.actions.length - 1].timestamp
+        this.endTime = this.steps[this.steps.length - 1].timestamp
     }
 
     /**
@@ -228,59 +228,59 @@ class Test
 
             await page.setViewport({ width: 1280, height: 800 });
 
-            for (let index = 0; index < this.actionCounter; index++)
+            for (let index = 0; index < this.stepCounter; index++)
             {
-                const currentAction = this.case.getNextItemInQueue();
+                const currentStep = this.case.getNextItemInQueue();
 
-                if (currentAction.getData('delay'))
+                if (currentStep.getData('delay'))
                 {
-                    await page.waitFor(currentAction.getData('delay'));
+                    await page.waitFor(currentStep.getData('delay'));
                 }
 
-                switch (currentAction.getData('type'))
+                switch (currentStep.getData('type'))
                 {
                     case 'visit':
-                        await page.goto(currentAction.getData('url')).then(() =>
+                        await page.goto(currentStep.getData('url')).then(() =>
                         {
-                            currentAction.setState(true);
+                            currentStep.setState(true);
                         }).catch((e) =>
                         {
-                            currentAction.setState(false);
+                            currentStep.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
+                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
                         });
                         break;
                     case 'fill':
-                        await page.type(currentAction.getData('target'), currentAction.getData('content')).then(() =>
+                        await page.type(currentStep.getData('target'), currentStep.getData('content')).then(() =>
                         {
-                            currentAction.setState(true);
+                            currentStep.setState(true);
                         }).catch((e) =>
                         {
-                            currentAction.setState(false);
+                            currentStep.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
+                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
                         });
                         break;
                     case 'click':
-                        await page.click(currentAction.getData('target')).then(() =>
+                        await page.click(currentStep.getData('target')).then(() =>
                         {
-                            currentAction.setState(true);
+                            currentStep.setState(true);
                         }).catch((e) =>
                         {
-                            currentAction.setState(false);
+                            currentStep.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
+                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
                         });
                         break;
                     case 'press':
-                        await page.keyboard.press(currentAction.getData('key')).then(() =>
+                        await page.keyboard.press(currentStep.getData('key')).then(() =>
                         {
-                            currentAction.setState(true);
+                            currentStep.setState(true);
                         }).catch((e) =>
                         {
-                            currentAction.setState(false);
+                            currentStep.setState(false);
 
-                            this.setFailureMessage(currentAction.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentAction.getErrorMessage()}` : e);
+                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
                         });
                         break;
                     case 'console':
@@ -291,27 +291,27 @@ class Test
 
                 terminal.increaseCounter();
                 
-                this.setActions(new Date().getTime(), currentAction.getDescription(), currentAction.getState());
+                this.setSteps(new Date().getTime(), currentStep.getDescription(), currentStep.getState());
 
-                terminal.createRow(new Date().getTime(), currentAction.getDescription(), currentAction.getState());
+                terminal.createRow(new Date().getTime(), currentStep.getDescription(), currentStep.getState());
 
-                if (currentAction.getState() === false)
+                if (currentStep.getState() === false)
                 {
-                    this.incrementFailedActionAmount();
+                    this.incrementFailedStepAmount();
 
                     terminal.setBreakpoint();
 
                     for (let idx = 0; idx <= this.case.getQueueSize(); idx++)
                     {       
-                        const currentAction = this.case.getNextItemInQueue();
+                        const currentStep = this.case.getNextItemInQueue();
 
                         terminal.increaseCounter();
 
-                        this.incrementFailedActionAmount();
+                        this.incrementFailedStepAmount();
 
-                        this.setActions(new Date().getTime(), currentAction.getDescription(), false);
+                        this.setSteps(new Date().getTime(), currentStep.getDescription(), false);
 
-                        terminal.createRow("", currentAction.getDescription(), false);
+                        terminal.createRow("", currentStep.getDescription(), false);
                     }
 
                     await page.waitFor(1000);
@@ -321,13 +321,13 @@ class Test
                 }
                 else
                 {
-                    if(this.getPassedActionsAmount() === this.getActionCounter() - 1)
+                    if(this.getPassedStepsAmount() === this.getStepCounter() - 1)
                     {
                         await page.waitFor(1000);
                         await page.screenshot({ path: `${this.getScreenshotFolder()}/screenshot-${ caseTitle.split(" ").join("-").toLowerCase() }_passed.png`, fullPage: true });
                     }
 
-                    this.incrementPassedActionAmount();
+                    this.incrementPassedStepAmount();
                     this.setState(true);
                 }
             }
@@ -336,7 +336,7 @@ class Test
             {
                 this.calculateEndTime();
 
-                terminal.createFooter(this.getFailedActionsAmount(), this.calculateRunningTime());
+                terminal.createFooter(this.getFailedStepsAmount(), this.calculateRunningTime());
 
                 callback({
                     caseTitle: this.case.getTitle(),
@@ -346,10 +346,10 @@ class Test
                         running: this.calculateRunningTime()
                     },
                     state: this.getState(),
-                    actions: this.getActions(),
+                    steps: this.getSteps(),
                     amount: {
-                        passed: this.getPassedActionsAmount(),
-                        failed: this.getFailedActionsAmount()
+                        passed: this.getPassedStepsAmount(),
+                        failed: this.getFailedStepsAmount()
                     },
                     failureMessage: this.getFailureMessage()
                 });

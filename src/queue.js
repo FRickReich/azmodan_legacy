@@ -1,6 +1,6 @@
 'use strict';
 
-const { Action } = require('./action');
+const { Step } = require('./step');
 
 class Queue
 {
@@ -39,18 +39,18 @@ class Queue
     }
 
     /**
-     * Add an item (action) to the queue.
-     * @method setNewAction
+     * Add an item (step) to the queue.
+     * @method setNewItem
      * @param { object } data
      * @returns { object }
      */
     setNewItem(data)
     {
-        const action = new Action(data);
+        const step = new Step(data);
 
         if (!this.first)
         {
-            this.first = action;
+            this.first = step;
         }
         else
         {
@@ -61,11 +61,11 @@ class Queue
                 n = n.next;
             }
 
-            n.next = action;
+            n.next = step;
         }
 
         this.size += 1;
-        return action;
+        return step;
     }
 }
 

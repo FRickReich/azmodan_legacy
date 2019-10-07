@@ -21,7 +21,7 @@ class Case
         this.queue = new Queue();
 
         this.setTitle(caseData.title);
-        this.setQueue(caseData.actions);
+        this.setQueue(caseData.steps);
     }
 
     /**
@@ -35,7 +35,7 @@ class Case
     }
 
     /**
-     * Gets all actions in the queue.
+     * Gets all steps in the queue.
      * @method getQueue
      * @returns { object }
      */
@@ -75,13 +75,13 @@ class Case
     }
 
     /**
-     * Populates cases queue with all actions from the list.
+     * Populates cases queue with all steps from the list.
      * @method setQueue
-     * @param { array } actions
+     * @param { array } steps
      */
-    setQueue(actions)
+    setQueue(steps)
     {
-        actions.forEach(item =>
+        steps.forEach(item =>
         {
             this.queue.setNewItem(item);
         });

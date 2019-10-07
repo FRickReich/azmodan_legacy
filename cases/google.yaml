@@ -1,5 +1,5 @@
 title: 'google search'
-actions:
+steps:
   - type: 'visit'
     url: 'https://www.google.com/'
     description: 'open google.com'
