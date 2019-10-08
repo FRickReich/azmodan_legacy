@@ -16,116 +16,66 @@ class Test
      */
     constructor(caseData)
     {
-        this.case = caseData;
-        this.stepCounter = this.case.getQueueSize();
-        this.startTime;
-        this.endTime;
-        this.state = false;
-        this.steps = [  ];
-        this.passedSteps = 0;
-        this.failedSteps = 0;
-        this.failureMessage = '';
-        this.screenshotFolder = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots';
+        
+        this._case = caseData;
+        this._stepCounter = this._case.queueSize;
+        this._screenshotFolder = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots';
+        this._state = false;
+        this._steps = [  ];
+        this._passedSteps = 0;
+        this._failedSteps = 0;
+        this._failureMessage = '';
+        this._startTime;
+        this._endTime;
     }
 
-    /**
-     * Gets the timestamp of the current tests initiation.
-     * @method getStartTime
-     * @returns { number }
-     */
-    getStartTime()
+    get state()
     {
-        return this.startTime;
+        return this._state;
     }
-
-    /**
-     * Gets the timestamp of when the current test-case finished.
-     * @method getEndTime
-     * @returns { number }
-     */
-    getEndTime()
+    get case()
     {
-        return this.endTime;
+        return this._case;
     }
-
-    /**
-     * Gets the final state of the current test-case.
-     * @method getState
-     * @returns { boolean }
-     */
-    getState()
+    get passedSteps()
     {
-        return this.state;
+        return this._passedSteps;
     }
-
-    /**
-     * Gets a list of all steps that are part of the current test-case.
-     * @method getSteps
-     * @returns { object }
-     */
-    getSteps()
+    get stepCounter()
     {
-        return this.steps;
+        return this._stepCounter;
     }
-
-    /**
-     * Gets the count of all steps in current case.
-     * @method getStepCounter
-     * @returns { number }
-     */
-    getStepCounter()
+    get failureMessage()
     {
-        return this.stepCounter;
+        return this._failureMessage;
     }
-
-    /**
-     * ON FAILED: Gets the failure message of the current test-case.
-     * @method getFailureMessage
-     * @returns { string }
-     */
-    getFailureMessage()
+    get steps()
     {
-        return this.failureMessage;
+        return this._steps;
     }
-
-    /**
-     * Gets the amount of passed steps.
-     * @method getPassedStepsAmount
-     * @returns { number }
-     */
-    getPassedStepsAmount()
+    get failedSteps()
     {
-        return this.passedSteps;    
+        return this._failedSteps;
     }
-
-    /**
-     * Gets the amount of failed steps.
-     * @method getFailedStepsAmount
-     * @returns { number }
-     */
-    getFailedStepsAmount()
+    get startTime()
     {
-        return this.failedSteps;
+        return this._startTime;
     }
-
-    /**
-     * Gets the screenshot folders name.
-     * @method getScreenshotFolder
-     * @return { string }
-     */
-    getScreenshotFolder()
+    get endTime()
     {
-        return this.screenshotFolder;
+        return this._endTime;
     }
-
-    /**
-     * Sets the final state of the current test-case.
-     * @method setState
-     * @param { bool } state 
-     */
-    setState(state)
+    get screenshotFolder()
     {
-        this.state = state;
+        return this._screenshotFolder;
+    }
+    set failureMessage(message)
+    {
+        this._failureMessage = message;
+    }
+    set state(state)
+    {
+        this._state = state;
     }
 
     /**
@@ -137,7 +87,7 @@ class Test
      */
     setSteps(timestamp, description, state)
     {
-        this.steps.push(
+        this._steps.push(
             {
                 timestamp,
                 description,
@@ -147,22 +97,12 @@ class Test
     }
 
     /**
-     * ON FAILED: Sets the current test-cases failure message.
-     * @method setFailureMessage
-     * @param { string } message
-     */
-    setFailureMessage(message)
-    {
-        this.failureMessage = message;
-    }
-
-    /**
      * Increments the amount of passed steps.
      * @method incrementPassedStepAmount
      */
     incrementPassedStepAmount()
     {
-        this.passedSteps++;
+        this._passedSteps++;
     }
     /**
      * Increments the amount of failed steps.
@@ -170,7 +110,7 @@ class Test
      */
     incrementFailedStepAmount()
     {
-        this.failedSteps++;
+        this._failedSteps++;
     }
 
     /**
@@ -179,7 +119,7 @@ class Test
      */
     calculateStartTime()
     {
-        this.startTime = new Date().getTime();
+        this._startTime = new Date().getTime();
     }
 
     /**
@@ -198,7 +138,7 @@ class Test
      */
     calculateEndTime()
     {
-        this.endTime = this.steps[this.steps.length - 1].timestamp
+        this._endTime = this.steps[this.steps.length - 1].timestamp
     }
 
     /**
@@ -208,12 +148,12 @@ class Test
      */
     startTest(callback)
     {
-        const caseTitle = this.case.getTitle();
+        const caseTitle = this.case.title;
 
         this.calculateStartTime();
 
         const terminal = new TerminalOutput();
-        terminal.setTitle(caseTitle);
+        terminal.title = caseTitle;
         terminal.createTable();
         terminal.showTable();
 
@@ -230,7 +170,7 @@ class Test
 
             for (let index = 0; index < this.stepCounter; index++)
             {
-                const currentStep = this.case.getNextItemInQueue();
+                const currentStep = this.case.nextQueueItem;
 
                 if (currentStep.getData('delay'))
                 {
@@ -242,45 +182,45 @@ class Test
                     case 'visit':
                         await page.goto(currentStep.getData('url')).then(() =>
                         {
-                            currentStep.setState(true);
+                            currentStep.state = true;
                         }).catch((e) =>
                         {
-                            currentStep.setState(false);
+                            currentStep.state = false;
 
-                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
+                            this.failureMessage = currentStep.errorMessage ? `Step ${ terminal.counter + 1 }: ${ currentStep.errorMessage }` : e;
                         });
                         break;
                     case 'fill':
                         await page.type(currentStep.getData('target'), currentStep.getData('content')).then(() =>
                         {
-                            currentStep.setState(true);
+                            currentStep.state = true;
                         }).catch((e) =>
                         {
-                            currentStep.setState(false);
+                            currentStep.state = false;
 
-                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
+                            this.failureMessage = currentStep.errorMessage ? `Step ${ terminal.counter + 1 }: ${ currentStep.errorMessage }` : e;
                         });
                         break;
                     case 'click':
                         await page.click(currentStep.getData('target')).then(() =>
                         {
-                            currentStep.setState(true);
+                            currentStep.state = true;
                         }).catch((e) =>
                         {
-                            currentStep.setState(false);
+                            currentStep.state = false;
 
-                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
+                            this.failureMessage = currentStep.errorMessage ? `Step ${ terminal.counter + 1 }: ${ currentStep.errorMessage }` : e;
                         });
                         break;
                     case 'press':
                         await page.keyboard.press(currentStep.getData('key')).then(() =>
                         {
-                            currentStep.setState(true);
+                            currentStep.state = true;
                         }).catch((e) =>
                         {
-                            currentStep.setState(false);
+                            currentStep.state = false;
 
-                            this.setFailureMessage(currentStep.getErrorMessage() ? `Step ${terminal.getCounter() + 1}: ${currentStep.getErrorMessage()}` : e);
+                            this.failureMessage = currentStep.errorMessage ? `Step ${ terminal.counter + 1 }: ${ currentStep.errorMessage }` : e;
                         });
                         break;
                     case 'console':
@@ -291,44 +231,44 @@ class Test
 
                 terminal.increaseCounter();
                 
-                this.setSteps(new Date().getTime(), currentStep.getDescription(), currentStep.getState());
+                this.setSteps(new Date().getTime(), currentStep.description, currentStep.state);
 
-                terminal.createRow(new Date().getTime(), currentStep.getDescription(), currentStep.getState());
+                terminal.createRow(new Date().getTime(), currentStep.description, currentStep.state);
 
-                if (currentStep.getState() === false)
+                if (currentStep.state === false)
                 {
                     this.incrementFailedStepAmount();
 
                     terminal.setBreakpoint();
 
-                    for (let idx = 0; idx <= this.case.getQueueSize(); idx++)
+                    for (let idx = 0; idx <= this.case.queueSize; idx++)
                     {       
-                        const currentStep = this.case.getNextItemInQueue();
+                        const currentStep = this.case.nextQueueItem;
 
                         terminal.increaseCounter();
 
                         this.incrementFailedStepAmount();
 
-                        this.setSteps(new Date().getTime(), currentStep.getDescription(), false);
+                        this.setSteps(new Date().getTime(), currentStep.description, false);
 
-                        terminal.createRow("", currentStep.getDescription(), false);
+                        terminal.createRow("", currentStep.description, false);
                     }
 
                     await page.waitFor(1000);
-                    await page.screenshot({ path: `${this.getScreenshotFolder()}/screenshot_${ caseTitle.split(" ").join("-").toLowerCase() }_step${ terminal.getBreakpoint() }_error.png`, fullPage: true });
+                    await page.screenshot({ path: `${ this.screenshotFolder }/screenshot_${ caseTitle.split(" ").join("-").toLowerCase() }_step${ terminal.breakpoint }_error.png`, fullPage: true });
 
                     break;
                 }
                 else
                 {
-                    if(this.getPassedStepsAmount() === this.getStepCounter() - 1)
+                    if(this.passedSteps === this.stepCounter - 1)
                     {
                         await page.waitFor(1000);
-                        await page.screenshot({ path: `${this.getScreenshotFolder()}/screenshot-${ caseTitle.split(" ").join("-").toLowerCase() }_passed.png`, fullPage: true });
+                        await page.screenshot({ path: `${ this.screenshotFolder }/screenshot-${ caseTitle.split(" ").join("-").toLowerCase() }_passed.png`, fullPage: true });
                     }
 
                     this.incrementPassedStepAmount();
-                    this.setState(true);
+                    this.state = true;
                 }
             }
 
@@ -336,22 +276,22 @@ class Test
             {
                 this.calculateEndTime();
 
-                terminal.createFooter(this.getFailedStepsAmount(), this.calculateRunningTime());
+                terminal.createFooter(this.failedSteps, this.calculateRunningTime());
 
                 callback({
-                    caseTitle: this.case.getTitle(),
+                    caseTitle: this.case.title,
                     time: {
-                        start: this.getStartTime(),
-                        end: this.getEndTime(),
+                        start: this.startTime,
+                        end: this.endTime,
                         running: this.calculateRunningTime()
                     },
-                    state: this.getState(),
-                    steps: this.getSteps(),
+                    state: this.state,
+                    steps: this.steps,
                     amount: {
-                        passed: this.getPassedStepsAmount(),
-                        failed: this.getFailedStepsAmount()
+                        passed: this.passedSteps,
+                        failed: this.failedSteps
                     },
-                    failureMessage: this.getFailureMessage()
+                    failureMessage: this.failureMessage
                 });
             });
         });

@@ -18,24 +18,24 @@ class EmailOutput
      */
     constructor(results)
     {
-        this.results = results;
         this.currentDate = new Date();
         this.screenshots = [  ];
         this.screenshotDirectory = process.env.SCREENSHOTS_FOLDER ? `./${ process.env.SCREENSHOTS_FOLDER }` : './screenshots'
-        this.attachments = [  ];
         this.mailSettings = [  ];
+        
+        this._results = results;
+        this._attachments = [];
 
         this.sendMail();
     }
 
-    /**
-     * Gets a list of all attached screenshots.
-     * @method getAttachments
-     * @returns { array }
-     */
-    getAttachments()
+    get attachments()
     {
-        return this.attachments;
+        return this._attachments;
+    }
+    get results()
+    {
+        return this._results;
     }
 
     /**
@@ -43,19 +43,10 @@ class EmailOutput
      * @method getMailSettings
      * @returns { object }
      */
+    
     getMailSettings(section)
     {
         return this.mailSettings[section];
-    }
-
-    /**
-     * Gets the results of the test.
-     * @method getResults
-     * @returns { object }
-     */
-    getResults()
-    {
-        return this.results;
     }
 
     /**
@@ -66,7 +57,7 @@ class EmailOutput
     {
         this.screenshots = getFilesInDirectory(this.screenshotDirectory);
         
-        this.attachments = this.screenshots.map((file) =>
+        this._attachments = this.screenshots.map((file) =>
         {
             return { filename: file, path: this.screenshotDirectory + '/' + file };
         });
@@ -101,8 +92,8 @@ class EmailOutput
                 from: process.env.EMAIL_SENDING_USER,
                 to: process.env.EMAIL_SENDING_TARGET.split(","),
                 subject: `Test results for ${ formatDateToday(this.currentDate) }`,
-                html: generateHtmlOutput(this.getResults()),
-                attachments: this.getAttachments()
+                html: generateHtmlOutput(this.results),
+                attachments: this.attachments
             }
         }
     }

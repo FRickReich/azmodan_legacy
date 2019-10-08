@@ -17,9 +17,6 @@ class TerminalOutput
     constructor()
     {
         this.table = new CliTable();
-        this.counter = 0;
-        this.breakpoint = 0;
-        this.title;
         this.columns = [
             {
                 key: 'id',
@@ -42,16 +39,27 @@ class TerminalOutput
                 width: 0
             }
         ];
+        
+        this._counter = 0;
+        this._title;
+        this._breakpoint = 0;
     }
 
-    /**
-     * Gets the title of the table-header.
-     * @method getTitle
-     * @returns { string }
-     */
-    getTitle()
+    get counter()
     {
-        return this.title;
+        return this._counter;
+    }
+    get title()
+    {
+        return this._title;
+    }
+    get breakpoint()
+    {
+        return this._breakpoint;
+    }
+    set title(title)
+    {
+        this._title = title;
     }
 
     /**
@@ -65,42 +73,12 @@ class TerminalOutput
     }
 
     /**
-     * Gets the current count of the row counter.
-     * @method getCounter
-     * @returns { number }
-     */
-    getCounter()
-    {
-        return this.counter;
-    }
-
-    /**
-     * Gets the current cases breakpoint on failed.
-     * @method getBreakpoint
-     * @returns { number }
-     */
-    getBreakpoint()
-    {
-        return this.breakpoint;
-    }
-
-    /**
-     * Sets the title for the table header.
-     * @method setTitle
-     * @param { string } titlex
-     */
-    setTitle(title)
-    {
-        this.title = title;
-    }
-
-    /**
      * Sets the current row line to the breakpoint on fail.
      * @method setBreakpoint
      */
     setBreakpoint()
     {
-        this.breakpoint = this.counter;
+        this._breakpoint = this.counter;
     }
 
     /**
@@ -109,7 +87,7 @@ class TerminalOutput
      */
     increaseCounter()
     {
-        this.counter += 1;
+        this._counter += 1;
     }
 
     /**
@@ -118,8 +96,8 @@ class TerminalOutput
      */
     createTable()
     {
-        this.table.SetTableTitle(`Testing case "${ this.getTitle() }"`);
-        this.table.SetTableColumns(this.getColumns());
+        this.table.SetTableTitle(`Testing case "${ this.title }"`);
+        this.table.SetTableColumns(this.columns);
     }
 
     /**
@@ -138,7 +116,7 @@ class TerminalOutput
     createFooter(failedSteps, runTime)
     {
         this.table.AddTableFooter(
-            failedSteps > 0 ? `canceled after ${ runTime } second(s) at #${ this.getBreakpoint() }` : `finished succesfully after ${ runTime } second(s)`
+            failedSteps > 0 ? `canceled after ${ runTime } second(s) at #${ this.breakpoint }` : `finished succesfully after ${ runTime } second(s)`
         );
     }
     
@@ -152,7 +130,7 @@ class TerminalOutput
     createRow(timestamp, description, state)
     {
         this.table.AddTableRow({
-            id: this.getCounter() < 10 ? " " + this.getCounter() : this.getCounter(),
+            id: this.counter < 10 ? " " + this.counter : this.counter,
             date: verifyDate(timestamp) ? formatDate(timestamp) : '',
             description,
             state: state === true ? color.green("✔") : color.red("✗")

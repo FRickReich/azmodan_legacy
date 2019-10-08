@@ -6,7 +6,7 @@ steps:
     error: 'could not find domain google.com'
 
   - type: 'fill'
-    target: 'input[name=q]'
+    target: 'input[namfe=q]'
     content: 'Hello world'
     description: 'type "Hello world" into searchbar'
     delay: 5000

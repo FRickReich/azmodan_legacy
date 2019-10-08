@@ -8,19 +8,26 @@ class Step
      */
     constructor(data)
     {
-        this.data = data;
-        this.next = null;
-        this.state = false;
+        this._data = data;
+        this._next = null;
+        this._state = false;
     }
 
-    /**
-     * Gets the state of the current step.
-     * @method getState
-     * @returns { boolean }
-     */
-    getState()
+    get state()
     {
-        return this.state;
+        return this._state;
+    }
+    get errorMessage()
+    {
+        return this._data.error;
+    }
+    get description()
+    {
+        return this._data.description;
+    }
+    set state(state)
+    {
+        this._state = state;
     }
 
     /**
@@ -31,37 +38,7 @@ class Step
      */
     getData(key)
     {
-        return this.data[key];
-    }
-
-    /**
-     * Gets the error message that was thrown after the current test-case failed.
-     * @method getErrorMessage
-     * @returns { string }
-     */
-    getErrorMessage()
-    {
-        return this.data.error;
-    }
-
-    /**
-     * Gets the description of the current step.
-     * @method getDescription
-     * @returns { string }
-     */
-    getDescription()
-    {
-        return this.data.description;
-    }
-
-    /**
-     * Sets state of the current step.
-     * @method setState
-     * @param { object } state 
-     */
-    setState(state)
-    {
-        this.state = state;
+        return this._data[key];
     }
 
     /**
@@ -72,7 +49,7 @@ class Step
      */
     setData(key, input)
     {
-        this.data[key] = input;
+        this._data[key] = input;
     }
 }
 

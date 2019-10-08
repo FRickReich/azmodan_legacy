@@ -17,73 +17,38 @@ class Case
     {
         const caseData = readYamlFile(process.env.CASE_FOLDER ? `./${ process.env.CASE_FOLDER }` : './cases', data);
 
-        this.title = "";
-        this.queue = new Queue();
+        this._title = "";
+        this._queue = new Queue();
 
-        this.setTitle(caseData.title);
-        this.setQueue(caseData.steps);
+        this.title = caseData.title;
+        this.queue = caseData.steps;
     }
 
-    /**
-     * Gets the title of the current case.
-     * @method getTitle
-     * @returns { string }
-     */
-    getTitle()
+    get title()
     {
-        return this.title;
+        return this._title;
     }
-
-    /**
-     * Gets all steps in the queue.
-     * @method getQueue
-     * @returns { object }
-     */
-    getQueue()
+    get queue()
     {
-        return this.queue;
+        return this._queue;
     }
-
-    /**
-     * Gets the size of the current queue.
-     * @method getQueueSize
-     * @returns { number }
-     */
-    getQueueSize()
+    get queueSize()
     {
-        return this.queue.getSize();
+        return this._queue.size;
     }
-
-    /**
-     * Gets the next item in the current queue.
-     * @method getNextItemInQueue
-     * @returns { object }
-     */
-    getNextItemInQueue()
+    get nextQueueItem()
     {
-        return this.queue.getNextItem();
+        return this._queue.nextItem;
     }
-
-    /** 
-     * Sets the title of the current case.
-     * @method setTitle
-     * @param { string } input
-     */
-    setTitle(input)
+    set title(input)
     {
-        this.title = input;
+        this._title = input;
     }
-
-    /**
-     * Populates cases queue with all steps from the list.
-     * @method setQueue
-     * @param { array } steps
-     */
-    setQueue(steps)
+    set queue(steps)
     {
         steps.forEach(item =>
         {
-            this.queue.setNewItem(item);
+            this._queue.newItem = item;
         });
     }
 }

@@ -9,62 +9,49 @@ class Queue
      */
     constructor()
     {
-        this.first = null;
-        this.size = 0;
+        this._first = null;
+        this._size = 0;
     }
 
-    /**
-     * Gets the next item and removes it from the queue.
-     * @method getNextItem
-     * @returns { object }
-     */
-    getNextItem()
+    get nextItem()
     {
-        const temp = this.first;
+        const temp = this._first;
 
-        this.first = this.first.next;
-        this.size -= 1;
+        this._first = this._first._next;
+        this._size -= 1;
 
         return temp;
     }
-
-    /**
-     * Gets the current size of the queue.
-     * @method getSize
-     * @returns { number }
-     */
-    getSize()
+    get size()
     {
-        return this.size;
+        return this._size;
     }
 
-    /**
-     * Add an item (step) to the queue.
-     * @method setNewItem
-     * @param { object } data
-     * @returns { object }
-     */
-    setNewItem(data)
+    set size(size)
+    {
+        this._size = size;
+    }
+    set newItem(data)
     {
         const step = new Step(data);
 
-        if (!this.first)
+        if (!this._first)
         {
-            this.first = step;
+            this._first = step;
         }
         else
         {
-            let n = this.first;
+            let n = this._first;
 
-            while (n.next)
+            while (n._next)
             {
-                n = n.next;
+                n = n._next;
             }
 
-            n.next = step;
+            n._next = step;
         }
 
-        this.size += 1;
+        this._size += 1;
         return step;
     }
 }
