@@ -119,15 +119,20 @@ after all tests have finished, the application will show an overview of the resu
 
 ## .env file
 
-| Property               | Type     | Description                                                           |
-| ---------------------- | -------- | --------------------------------------------------------------------- |
-| EMAIL_SENDING_USER     | `string` | The user sending the results-email.                                   |
-| EMAIL_SENDING_PASSWORD | `string` | The password of the user sending results email.                       |
-| EMAIL_SENDING_SERVER   | `string` | The server of the user sending the results email.                     |
-| EMAIL_SENDING_PORT     | `number` | The port of the server sending the results email.                     |
-| EMAIL_SENDING_TARGET   | `array`  | One or more targets that will recieve the results email.              |
-| CASE_FOLDER            | `string` | The folder where the test-cases are located. [DEFAULT: 'cases']       |
-| SCREENSHOTS_FOLDER     | `string` | The folder where the test-cases are located. [DEFAULT: 'screenshots'] |
+| Property               | Type      | Description                                                           |
+| ---------------------- | --------- | --------------------------------------------------------------------- |
+| EMAIL_SENDING_USER     | `string`  | The user sending the results-email.                                   |
+| EMAIL_SENDING_PASSWORD | `string`  | The password of the user sending results email.                       |
+| EMAIL_SENDING_SERVER   | `string`  | The server of the user sending the results email.                     |
+| EMAIL_SENDING_PORT     | `number`  | The port of the server sending the results email.                     |
+| EMAIL_SENDING_TARGET   | `array`   | One or more targets that will recieve the results email.              |
+| CASE_FOLDER            | `string`  | The folder where the test-cases are located. [DEFAULT: 'cases']       |
+| SCREENSHOTS_FOLDER     | `string`  | The folder where the test-cases are located. [DEFAULT: 'screenshots'] |
+| HEADLESS_BROWSER       | `boolean` | Should the browser be headless or not?                                |
+| HEADLESS_DELAY=50      | `number`  | Delay of typing.                                                      |
+| EMAIL_RESULTS=false    | `boolean` | Should an email be sent with the results after application finishes?  |
+| REPEAT_TEST=false      | `boolean` | Should all test-cases repeat X amount of times?                       |
+| REPEAT_AMOUNT=2        | `number`  | Amount of times the test-cases should repeat.                         |
 
 ## Dependencies
 - cli-color (1.4.0)   - Displays state-colors in terminal.

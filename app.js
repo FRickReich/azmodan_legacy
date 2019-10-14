@@ -14,11 +14,13 @@ const {
     getFilesInDirectory,
 } = require('./src/utils');
 
-const results = [  ];
+let results = [  ];
 
 let cases;
 let caseFiles;
 let currentCase = 0;
+
+let currentTest = 1;
 
 /**
  * Populates the cases with its corresponding step.
@@ -40,6 +42,29 @@ const populateCases = () =>
     return temp;
 }
 
+const runRepeatingTest = async () =>
+{
+    caseFiles = getFilesInDirectory(`./${ process.env.CASE_FOLDER }`);
+
+    cases = populateCases();
+
+    const runningCase = cases[0];
+    const test = new Test(runningCase);
+ 
+    test.startTest((result) =>
+    {
+        results = [ ];
+        results.push(result);
+        showResults(results);
+
+        if (currentTest < process.env.REPEAT_AMOUNT)
+        {
+            currentTest++;
+            runRepeatingTest();
+        }
+    });
+}
+
 /**
  * Runs the test.
  * @function runTest
@@ -47,9 +72,13 @@ const populateCases = () =>
  */
 const runTest = async () =>
 {
+    caseFiles = getFilesInDirectory(`./${ process.env.CASE_FOLDER }`);
+
+    cases = populateCases();
+
     const runningCase = cases[currentCase];
     const test = new Test(runningCase);
-
+        
     showStep(1);
     
     test.startTest((result) =>
@@ -78,6 +107,7 @@ const runTest = async () =>
             {
                 console.log("Email deactivated.\n")    
             }
+                
 
             showStep(4);
         }
@@ -90,9 +120,13 @@ const runTest = async () =>
  */
 (function init()
 {
-    caseFiles = getFilesInDirectory(`./${ process.env.CASE_FOLDER }`);
-
-    cases = populateCases();
-
-    runTest();
+    
+    if (process.env.REPEAT_TEST === "true")
+    {
+        runRepeatingTest();
+    }
+    else
+    {
+        runTest();
+    }
 })();

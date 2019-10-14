@@ -31,12 +31,12 @@ steps:
 
   - type: 'click'
     target: '#main > section > div > div > div > div > div:nth-child(1) > div:nth-child(1) > div.oc-menu.opuscapita-dark-theme.at-top > div.right-col > div > div > div:nth-child(4) > div > div.sub-items-container.sub-items-container--with-dropdown > div > div.middle-row > div > button:nth-child(2)'
-    delay: 1000
+    delay: 2500
     description: 'click logout-button'
     error: 'could not click logout-button'
 
   - type: 'click'
     target: '#main > div.modal.fade.in > div > div > div.modal-footer > button.btn.btn-link'
-    delay: 500
+    delay: 2000
     description: 'accept logout'
     error: 'could not accept logout'
