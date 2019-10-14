@@ -158,6 +158,8 @@ class Test
         terminal.showTable();
 
         puppeteer.launch({
+            headless: process.env.HEADLESS_BROWSER === "true" ? true : false,
+            slowMo: process.env.HEADLESS_DELAY,
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
@@ -223,6 +225,14 @@ class Test
                             this.failureMessage = currentStep.errorMessage ? `Step ${ terminal.counter + 1 }: ${ currentStep.errorMessage }` : e;
                         });
                         break;
+                    // case 'compare':
+                        
+                        // const post = await page.evaluate(id => {
+                        //     return document.querySelector(`#post-${id}`) ? true : false
+                        // }, id);
+                        
+                        // expect(post).toEqual(true);
+                        // break;
                     case 'console':
                         break;
                     case 'read':
@@ -254,17 +264,23 @@ class Test
                         terminal.createRow("", currentStep.description, false);
                     }
 
-                    await page.waitFor(1000);
-                    await page.screenshot({ path: `${ this.screenshotFolder }/screenshot_${ caseTitle.split(" ").join("-").toLowerCase() }_step${ terminal.breakpoint }_error.png`, fullPage: true });
-
+                    if (process.env.EMAIL_RESULTS === "true")
+                    {
+                        await page.waitFor(1000);
+                        await page.screenshot({ path: `${ this.screenshotFolder }/screenshot_${ caseTitle.split(" ").join("-").toLowerCase() }_step${ terminal.breakpoint }_error.png`, fullPage: true });
+                    }
+                    
                     break;
                 }
                 else
                 {
                     if(this.passedSteps === this.stepCounter - 1)
                     {
-                        await page.waitFor(1000);
-                        await page.screenshot({ path: `${ this.screenshotFolder }/screenshot-${ caseTitle.split(" ").join("-").toLowerCase() }_passed.png`, fullPage: true });
+                        if (process.env.EMAIL_RESULTS === "true")
+                        {
+                            await page.waitFor(1000);
+                            await page.screenshot({ path: `${ this.screenshotFolder }/screenshot_${ caseTitle.split(" ").join("-").toLowerCase() }_step${ terminal.breakpoint }_error.png`, fullPage: true });
+                        }
                     }
 
                     this.incrementPassedStepAmount();

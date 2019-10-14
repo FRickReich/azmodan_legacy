@@ -49,6 +49,8 @@ const runTest = async () =>
 {
     const runningCase = cases[currentCase];
     const test = new Test(runningCase);
+
+    showStep(1);
     
     test.startTest((result) =>
     {
@@ -67,8 +69,15 @@ const runTest = async () =>
             showResults(results);
 
             showStep(3);
-            
-            new EmailOutput(results);
+
+            if (process.env.EMAIL_RESULTS === "true")
+            {
+                new EmailOutput(results);
+            }
+            else
+            {
+                console.log("Email deactivated.\n")    
+            }
 
             showStep(4);
         }
@@ -84,8 +93,6 @@ const runTest = async () =>
     caseFiles = getFilesInDirectory(`./${ process.env.CASE_FOLDER }`);
 
     cases = populateCases();
-
-    showStep(1);
 
     runTest();
 })();
