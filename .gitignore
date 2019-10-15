@@ -4,5 +4,4 @@
 /node_modules
 /_legacy
 
-/cases/cdi.yaml
-/cases/oc-dashboard.yaml
+/cases/*.yaml
